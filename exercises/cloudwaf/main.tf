@@ -15,7 +15,7 @@ resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 
   tags = {
-    Name = "Cloudwaf"
+    Name        = "Cloudwaf"
     Environment = "Dev"
   }
 }
@@ -117,7 +117,7 @@ resource "aws_instance" "web" {
   associate_public_ip_address = true
 
   #userdata
-  user_data = user_data = filebase64("${path.module}/install.sh")
+  user_data = filebase64("${path.module}/install.sh")
 
   tags = {
     Name = "Cloudwaf"
