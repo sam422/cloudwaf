@@ -20,11 +20,7 @@ sudo usermod -a -G docker ec2-user
 sudo chkconfig docker on
 
 echo "Install Jenkins"
-sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
-sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
-sudo yum install -y jenkins
-sudo usermod -a -G docker jenkins
-sudo chkconfig jenkins on
+docker run -p 8080:8080 -p 50000:50000 -v /your/home:/var/jenkins_home jenkins
 
 echo "Start Docker & Jenkins services"
 sudo service docker start
