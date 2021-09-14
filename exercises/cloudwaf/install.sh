@@ -22,6 +22,9 @@ sudo chkconfig docker on
 echo "Install Jenkins"
 docker run -p 8080:8080 -p 50000:50000 -v /your/home:/var/jenkins_home jenkins
 
+echo "Install NGINX"
+docker run --name cloudwaf-nginx -d -p 80:8080 some-content-nginx
+
 echo "Start Docker & Jenkins services"
 sudo service docker start
 sudo service jenkins start
