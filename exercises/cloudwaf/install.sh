@@ -13,8 +13,11 @@ sudo yum install -y git
 
 echo "Install Docker engine"
 sudo yum update -y
+sudo amazon-linux-extras install docker
 sudo yum install docker -y
-sudo sudo chkconfig docker on
+sudo service docker start
+sudo usermod -a -G docker ec2-user
+sudo chkconfig docker on
 
 echo "Install Jenkins"
 sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
