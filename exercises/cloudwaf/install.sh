@@ -20,10 +20,22 @@ sudo usermod -a -G docker ec2-user
 sudo chkconfig docker on
 
 echo "Install Jenkins"
-docker run -p 8080:8080 -p 50000:50000 -v /your/home:/var/jenkins_home jenkins
+docker run \
+  --name jenkins-docker \
+  --rm \
+  --detach \
+  --privileged \
+  --network jenkins \
+  --network-alias docker \
+  --env DOCKER_TLS_CERTDIR=/certs \
+  --volume jenkins-docker-certs:/certs/client \
+  --volume jenkins-data:/var/jenkins_home \
+  --publish 8080:8080 \
+  docker:dind \
+  --storage-driver overlay2
 
 echo "Install NGINX"
-docker run --name cloudwaf-nginx -d -p 80:8080 some-content-nginx
+docker run --name cloudwaf-nginx -d -p 80:8080 cloudwaf-nginx
 
 echo "Start Docker & Jenkins services"
 sudo service docker start
