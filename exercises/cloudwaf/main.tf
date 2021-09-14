@@ -15,8 +15,8 @@ resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 
   tags = {
-    Name = "CloudAcademy"
-    Demo = "Terraform"
+    Name = "Cloudwaf"
+    Environment = "Dev"
   }
 }
 
@@ -117,14 +117,9 @@ resource "aws_instance" "web" {
   associate_public_ip_address = true
 
   #userdata
-  user_data = <<EOF
-#!/bin/bash
-sudo amazon-linux-extras install nginx1 -y
-sudo /usr/sbin/nginx
-echo fin v1.00!
-EOF
+  user_data = user_data = filebase64("${path.module}/install.sh")
 
   tags = {
-    Name = "CloudAcademy"
+    Name = "Cloudwaf"
   }
 }
