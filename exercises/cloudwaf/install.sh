@@ -32,28 +32,16 @@ docker run -p 8080:8080 jenkins:1.0
 echo "Install NGINX"
 mkdir nginx && cd nginx
 cat > nginx.conf <<EOF
-################################################
-# Jenkins Nginx Proxy configuration
-#################################################
 upstream jenkins {
-  server 127.0.0.1:8080 fail_timeout=0;
+  server        127.0.0.1:8080;
 }
 
 server {
-  listen 80;
-  server_name jenkins.example.com;
+  listen        80;
+  server_name   localhost;
 
   location / {
-    proxy_pass         http://127.0.0.1:8080/;
-    proxy_set_header        Host $host:$server_port;
-    proxy_set_header        X-Real-IP $remote_addr;
-    proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header        X-Forwarded-Proto $scheme;
-    proxy_pass              http://jenkins;
-    # Required for new HTTP-based CLI
-    proxy_http_version 1.1;
-    proxy_request_buffering off;
-    proxy_buffering off; # Required for HTTP-based CLI to work over SSL
+    proxy_pass  http://127.0.0.1;
   }
 }
 EOF
