@@ -18,6 +18,8 @@ sudo yum install docker -y
 sudo service docker start
 sudo usermod -a -G docker ec2-user
 sudo chkconfig docker on
+docker network create nginx
+docker network create localhost --internal
 
 echo "Install Jenkins"
 mkdir jenkins && cd jenkins
@@ -30,7 +32,7 @@ USER jenkins
 EXPOSE 8080
 EOF
 docker build -t jenkins:1.0 .
-docker run -p 8080:8080 jenkins:1.0
+docker run -d -p 8080:8080  jenkins:1.0 
 
 echo "Install NGINX"
 mkdir nginx && cd nginx
