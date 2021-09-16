@@ -30,7 +30,7 @@ USER jenkins
 EXPOSE 8080
 EOF
 docker build -t jenkins:1.0 .
-docker run -p 8080:8080 jenkins:1.0
+docker run -d -p 8080:8080 --name jenkins-master --network localhost jenkins:1.0 
 
 echo "Install NGINX"
 mkdir nginx && cd nginx
