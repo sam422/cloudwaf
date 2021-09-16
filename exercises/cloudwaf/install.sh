@@ -22,7 +22,10 @@ sudo chkconfig docker on
 echo "Install Jenkins"
 mkdir jenkins && cd jenkins
 cat > Dockerfile <<EOF
-FROM jenkins:1.565.3
+FROM jenkins/jenkins:lts
+LABEL maintainer=”sk@gmail.com”
+ENV JAVA_OPTS="-Xmx1024m"
+ENV JENKINS_OPTS=" --handlerCountMax=300"
 USER jenkins
 EXPOSE 8080
 EOF
